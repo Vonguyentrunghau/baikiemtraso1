@@ -67,8 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <form method="POST" action="login.php">
             <div class="form-group">
-                <label for="username">Tên người dùng</label>
-                <input type="text" id="username" name="username" placeholder="Tên người dùng" value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>
+                <label for="username">Email</label>
+                <input type="text" id="username" name="username" placeholder="Email người dùng" value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>
             </div>
             <div class="form-group">
                 <label for="password">Mật khẩu</label>
@@ -79,8 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="links">
         <p class="signup-link">Chưa có tài khoản? <a href="register.php">Đăng ký ngay</a></p>
-        <p class="forgot-link"><a href="forgotpassword.php">Quên mật khẩu?</a></p>
-       
+        <p class="forgot-link"><a href="reset-password.php">Quên mật khẩu?</a></p>
         </div>
     </div>
 </div>
@@ -106,7 +105,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .signup-link {
     color: white;
 }
-
     body {
         font-family: Arial, sans-serif;
         background-image: url(images/lich-chieu-phim-tien-nghich-4.jpg);
@@ -287,3 +285,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         color: #00c6ff;
     }
 </style>
+

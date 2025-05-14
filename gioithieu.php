@@ -1,10 +1,10 @@
 <?php
 $members = [
-    ['name' => 'Võ Nguyễn Trung Hậu', 'role' => 'THG nghiện tiểu thuyết làm web  ', 'image' => 'images/download.jpg'],
-    ['name' => 'Hoàng Thi Hải', 'role' => 'Quản lý danh mục sản phẩm và đảm bảo rằng mọi mặt hàng trên trang web đều đáp ứng tiêu chuẩn chất lượng cao nhất.', 'image' => 'images/7d1e3b455e2156874221bde9e8f0427f.jpg'],
-    ['name' => 'Nguyễn Dương Hoài An', 'role' => 'Là một nhà thiết kế sáng tạo, đảm bảo giao diện của trang web không chỉ đẹp mắt mà còn thân thiện"chúa nhát"', 'image' => 'images/download (1).jpg']
+    ['name' => 'Võ Nguyễn Trung Hậu', 'role' => 'Chuyên gia phát triển web, đam mê sáng tạo giao diện', 'image' => 'images/nhat-niem-vinh-hang.jpg'],
+    ['name' => 'Hoàng Thi Hải', 'role' => 'Quản lý danh mục sản phẩm, đảm bảo chất lượng tối ưu', 'image' => 'images/images.jpg'],
+    ['name' => 'Nguyễn Dương Hoài An', 'role' => 'Nhà thiết kế sáng tạo, xây dựng giao diện thân thiện', 'image' => 'images/thach-hao-thuvienanime-17.jpg']
 ];
-?>  
+?>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -18,19 +18,16 @@ $members = [
             padding: 0;
             box-sizing: border-box;
             font-family: Arial, sans-serif;
-            transition: all 0.3s ease-in-out;
         }
+
         body {
-            text-align: center;
-            padding: 60px;
-            animation: fadeIn 1s ease-in-out;
+            min-height: 100vh;
+            padding: 80px 20px 20px;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a1a1a, #2c3e50);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+
         .video-background {
             position: fixed;
             top: 0;
@@ -38,150 +35,191 @@ $members = [
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1;
+            z-index: -2;
         }
+
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.5);
             z-index: -1;
         }
-        h1 {
-            color: white;
-            margin-bottom: 20px;
-        }
-        .introduction {
-            color: white;
-            font-size: 18px;
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .team {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .member {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 250px;
-            text-align: center;
-        }
-        .member img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-        .member h2 {
-            font-size: 18px;
-            color: #007BFF;
-        }
-        .member p {
-            font-size: 14px;
-            color: #666;
-        }
-        .member:hover {
-            transform: scale(1.05);
-            box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.5);
-        }
+
         .navbar {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 50px;
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .logo {
-            font-size: 22px;
+            font-size: 1.5rem;
             font-weight: bold;
-            color: white;
             text-transform: uppercase;
-            text-decoration: none;
-            background: linear-gradient(to right,rgb(255, 255, 255),rgb(0, 0, 0));
+            background: linear-gradient(to right, #ffffff, #00c6ff);
             -webkit-background-clip: text;
             color: transparent;
+            text-decoration: none;
         }
 
         .menu {
             list-style: none;
             display: flex;
+            gap: 25px;
+            align-items: center;
         }
 
         .menu li {
-            margin: 0 15px;
+            position: relative;
         }
 
         .menu a {
-            text-decoration: none;
             color: white;
-            font-size: 16px;
+            text-decoration: none;
+            font-size: 1rem;
             font-weight: 500;
-            transition: 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
         }
 
         .menu a:hover {
             color: #00c6ff;
-            text-shadow: 0px 0px 10px rgba(0, 198, 255, 0.8);
-        }
-        btn {
-            padding: 12px 25px;
-            font-size: 16px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            margin: 10px;
-            position: relative;
-            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
         }
 
-        /* Nút chính */
-        .btn-primary {
-            background: linear-gradient(90deg,rgba(0, 200, 255, 0.14), #0072ff);
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
             color: white;
+            cursor: pointer;
         }
 
-        .btn-primary:hover {
-            background: linear-gradient(90deg, #0072ff, #00c6ff);
-            transform: scale(1.05);
-            box-shadow: 0px 0px 15px rgba(0, 198, 255, 0.7);
+        h1 {
+            color: white;
+            text-align: center;
+            margin: 30px 0;
+            font-size: 2.5rem;
         }
 
+        .introduction {
+            color: white;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .team {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .member {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #007BFF;
+        }
+
+        .member h2 {
+            font-size: 1.2rem;
+            color: #007BFF;
+            margin-bottom: 10px;
+        }
+
+        .member p {
+            font-size: 0.9rem;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+        }
+
+        .unmute-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px 20px;
+            }
+
+            .menu {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .menu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .introduction {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-<button id="unmuteButton" class="btn btn-primary">Đừng bấm vào</button>
+    <video class="video-background" autoplay loop muted playsinline>
+        <source src="images/98c7ab5b-c2a3-45e5-83f3-475337813ad1.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
 
-<script>
-    document.getElementById("unmuteButton").addEventListener("click", function () {
-        let video = document.querySelector(".video-background");
-        video.muted = false; // Bỏ tắt tiếng
-        video.play(); // Chạy lại video nếu cần
-    });
-</script>
-<video autoplay loop muted class="video-background">
-    <source src="images/1.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
-<nav class="navbar">
-        <a href="images/lich-chieu-phim-tien-nghich-4.jpg" class="logo">UIA</a>
+    <nav class="navbar">
+        <a href="index.php" class="logo">UIA</a>
+        <span class="hamburger">☰</span>
         <ul class="menu">
             <li><a href="index.php">Trang Chủ</a></li>
             <li><a href="gioithieu.php">Giới Thiệu</a></li>
@@ -189,19 +227,36 @@ $members = [
             <li><a href="products.index.php">Cửa Hàng</a></li>
         </ul>
     </nav>
-<h1>Giới Thiệu Thành Viên</h1>
-<p class="introduction">Chào mừng bạn đến với trang giới thiệu đội ngũ của chúng tôi! Chúng tôi là một nhóm các chuyên gia tận tâm trong lĩnh vực công nghệ, thiết kế và marketing, luôn hướng đến việc mang lại trải nghiệm tốt nhất cho khách hàng.</p>
 
-<div class="team">
-    <?php foreach ($members as $member): ?>
-        <div class="member">
-            <img src="<?= $member['image'] ?>" alt="<?= $member['name'] ?>">
-            <h2><?= $member['name'] ?></h2>
-            <p><?= $member['role'] ?></p>
-        </div>
-    <?php endforeach; ?>
-</div>
+    <h1>Giới Thiệu Thành Viên</h1>
+    <p class="introduction">Chào mừng bạn đến với trang giới thiệu đội ngũ của chúng tôi! Chúng tôi là một nhóm các chuyên gia tận tâm trong lĩnh vực công nghệ, thiết kế và quản lý sản phẩm, luôn hướng đến việc mang lại trải nghiệm tốt nhất cho khách hàng.</p>
 
+    <div class="team">
+        <?php foreach ($members as $member): ?>
+            <div class="member">
+                <img src="<?= htmlspecialchars($member['image']) ?>" alt="<?= htmlspecialchars($member['name']) ?>">
+                <h2><?= htmlspecialchars($member['name']) ?></h2>
+                <p><?= htmlspecialchars($member['role']) ?></p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <button class="unmute-button" id="unmuteButton">Bật âm thanh</button>
+
+    <script>
+        // Hamburger menu toggle
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            document.querySelector('.menu').classList.toggle('active');
+        });
+
+        // Video unmute toggle
+        document.getElementById('unmuteButton').addEventListener('click', () => {
+            const video = document.querySelector('.video-background');
+            video.muted = !video.muted;
+            document.getElementById('unmuteButton').textContent = video.muted ? 'Bật âm thanh' : 'Tắt âm thanh';
+        });
+    </script>
+
+    <?php include 'footer.php'; ?>
 </body>
 </html>
-<?php include 'footer.php'; 

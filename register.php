@@ -1,17 +1,16 @@
 <?php
-// register.php
-
 session_start();
+require 'db_connect.php';
+
+// Nếu đã đăng nhập thì chuyển về dashboard
+if (isset($_SESSION['user_id'])) {
+    header("Location: dashboard.php");
+    exit();
+}
 
 // Biến thông báo
 $error_message = "";
 $success_message = "";
-
-// Nếu đã đăng nhập thì chuyển về dashboard
-if (isset($_SESSION['username'])) {
-    header("Location: dashboard.php");
-    exit();
-}
 
 // Xử lý khi gửi form
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -28,14 +27,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($password !== $confirm_password) {
         $error_message = "Mật khẩu nhập lại không khớp!";
     } else {
-        // Lưu session (chỉ để demo)
-        $_SESSION['registered_username'] = $username;
-        $_SESSION['registered_email'] = $email;
-        $_SESSION['registered_password'] = $password; // Không nên dùng trong thực tế
-
-        // Chuyển sang trang login
-        header("Location: login.php?success=1");
-        exit();
+        // Kiểm tra email hoặc username đã tồn tại
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? OR username = ?");
+        $stmt->execute([$email, $username]);
+        if ($stmt->fetch()) {
+            $error_message = "Email hoặc tên người dùng đã tồn tại!";
+        } else {
+            // Mã hóa mật khẩu
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $pdo->prepare("INSERT INTO users (username, email, password, reset_password) VALUES (?, ?, ?, ?)");
+            try {
+                if ($stmt->execute([$username, $email, $hashed_password, $hashed_password])) {
+                    $success_message = "Đăng ký thành công! Vui lòng đăng nhập.";
+                    header("Location: login.php?success=Đăng ký thành công. Vui lòng đăng nhập.");
+                    exit();
+                } else {
+                    $error_message = "Đăng ký thất bại. Vui lòng thử lại.";
+                }
+            } catch (PDOException $e) {
+                $error_message = "Lỗi: " . $e->getMessage();
+            }
+        }
     }
 }
 ?>
@@ -172,20 +184,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: white;
             text-transform: uppercase;
             text-decoration: none;
-            background: linear-gradient(to right,rgb(255, 255, 255),rgb(0, 0, 0));
+            background: linear-gradient(to right, rgb(255, 255, 255), rgb(0, 0, 0));
             -webkit-background-clip: text;
             color: transparent;
         }
 
-        /* Bố cục chính */
-        .wrapper {
-            display: flex;
-            width: 800px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-        }
         .menu {
             list-style: none;
             display: flex;
@@ -205,17 +208,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .menu li a:hover {
             color: #00c6ff;
         }
-        </style>
+
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+        }
+
+        .success-message {
+            color: green;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
-        <a href="images/55536772-c460-4374-b64e-f5fc5017bedb.jpg" class="logo">UIA</a>
+        <a href="index.php" class="logo">UIA</a>
         <ul class="menu">
             <li><a href="index.php">Trang Chủ</a></li>
             <li><a href="gioithieu.php">Giới Thiệu</a></li>
             <li><a href="contact.php">Liên Hệ</a></li>
             <li><a href="products.index.php">Cửa Hàng</a></li>
-            <?php if (isset($_SESSION['user'])): ?>
+            <?php if (isset($_SESSION['user_id'])): ?>
                 <li><a href="logout.php">Đăng Xuất</a></li>
             <?php else: ?>
                 <li><a href="login.php">Đăng Nhập</a></li>
@@ -226,20 +239,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <h2>Đăng Ký</h2>
 
-        <!-- Hiển thị thông báo lỗi -->
+        <!-- Hiển thị thông báo -->
         <?php if (!empty($error_message)): ?>
-            <p style="color: red; margin-bottom: 15px;"><?php echo $error_message; ?></p>
+            <p class="error-message"><?php echo htmlspecialchars($error_message); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($success_message)): ?>
+            <p class="success-message"><?php echo htmlspecialchars($success_message); ?></p>
         <?php endif; ?>
 
         <!-- Form đăng ký -->
         <form method="post" action="">
             <div class="input-group">
                 <label for="username">Họ và Tên</label>
-                <input type="text" id="username" name="username" placeholder="Nhập họ tên" required>
+                <input type="text" id="username" name="username" placeholder="Nhập họ tên" value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>
             </div>
             <div class="input-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Nhập email" required>
+                <input type="email" id="email" name="email" placeholder="Nhập email" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" required>
             </div>
             <div class="input-group">
                 <label for="password">Mật khẩu</label>

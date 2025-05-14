@@ -1,12 +1,14 @@
 <?php
-    session_start();
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uia</title>
+    <meta name="description" content="UIA - Nơi cung cấp nhiều thể loại truyện">
+    <title>UIA</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <style>
         * {
             margin: 0;
@@ -14,8 +16,9 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
+
         body {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -25,7 +28,6 @@
             overflow: hidden;
         }
 
-        /* Video Background */
         .video-background {
             position: absolute;
             top: 0;
@@ -36,7 +38,6 @@
             z-index: -2;
         }
 
-        /* Lớp phủ tối */
         .overlay {
             position: absolute;
             top: 0;
@@ -47,28 +48,27 @@
             z-index: -1;
         }
 
-        /* Thanh điều hướng */
         .navbar {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 50px;
-            background: rgba(255, 255, 255, 0.06);
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10;
         }
 
         .logo {
             font-size: 22px;
             font-weight: bold;
-            color: white;
             text-transform: uppercase;
             text-decoration: none;
-            background: linear-gradient(to right,rgb(255, 255, 255),rgb(0, 0, 0));
+            background: linear-gradient(to right, #fff, #000);
             -webkit-background-clip: text;
             color: transparent;
         }
@@ -76,6 +76,7 @@
         .menu {
             list-style: none;
             display: flex;
+            align-items: center;
         }
 
         .menu li {
@@ -84,30 +85,30 @@
 
         .menu a {
             text-decoration: none;
-            color: white;
+            color: #fff;
             font-size: 16px;
             font-weight: 500;
-            transition: 0.3s ease;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
         .menu a:hover {
             color: #00c6ff;
-            text-shadow: 0px 0px 10px rgba(0, 198, 255, 0.8);
+            text-shadow: 0 0 10px rgba(0, 198, 255, 0.8);
         }
 
-        /* Nội dung chính */
         .container {
-            background: rgba(0, 0, 0, 0);
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
-            padding: 30px;  
+            padding: 30px;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 1;
             animation: fadeIn 1s ease-in-out;
+            max-width: 600px;
+            width: 100%;
         }
 
-        /* Hiệu ứng mờ dần khi tải trang */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -116,9 +117,10 @@
         h1 {
             font-size: 36px;
             font-weight: 600;
-            background: linear-gradient(to right, #00c6ff,rgb(255, 255, 255));
+            background: linear-gradient(to right, #00c6ff, #fff);
             -webkit-background-clip: text;
             color: transparent;
+            margin-bottom: 20px;
         }
 
         p {
@@ -127,7 +129,6 @@
             margin-bottom: 20px;
         }
 
-        /* Hiệu ứng nút */
         .btn {
             padding: 12px 25px;
             font-size: 16px;
@@ -140,43 +141,68 @@
             overflow: hidden;
         }
 
-        /* Nút chính */
+        .btn:focus {
+            outline: 2px solid #00c6ff;
+            outline-offset: 2px;
+        }
+
         .btn-primary {
-            background: linear-gradient(90deg,rgba(0, 200, 255, 0.14), #0072ff);
-            color: white;
+            background: linear-gradient(90deg, rgba(0, 200, 255, 0.14), #0072ff);
+            color: #fff;
         }
 
         .btn-primary:hover {
             background: linear-gradient(90deg, #0072ff, #00c6ff);
             transform: scale(1.05);
-            box-shadow: 0px 0px 15px rgba(0, 198, 255, 0.7);
+            box-shadow: 0 0 15px rgba(0, 198, 255, 0.7);
         }
 
-        /* Nút phụ */
         .btn-secondary {
             background: transparent;
-            border: 2px solid white;
-            color: white;
+            border: 2px solid #fff;
+            color: #fff;
         }
 
         .btn-secondary:hover {
-            background: white;
-            color: black;
+            background: #fff;
+            color: #000;
             transform: scale(1.05);
-            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
         }
 
-        /* Responsive */
+        .btn-toggle-audio {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), #ff4444);
+            color: #fff;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-toggle-audio:hover {
+            background: linear-gradient(90deg, #ff4444, #ff8888);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.7);
+        }
+
+        .btn-toggle-audio.muted {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), #666);
+        }
+
+        .btn-toggle-audio.muted:hover {
+            background: linear-gradient(90deg, #666, #999);
+            box-shadow: 0 0 15px rgba(153, 153, 153, 0.7);
+        }
+
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
-                align-items: center;
                 padding: 10px;
             }
 
             .menu {
                 flex-direction: column;
-                text-align: center;
                 margin-top: 10px;
             }
 
@@ -185,8 +211,8 @@
             }
 
             .container {
-                width: 90%;
                 padding: 20px;
+                max-width: 90%;
             }
 
             h1 {
@@ -196,53 +222,67 @@
             p {
                 font-size: 16px;
             }
+
+            .btn-toggle-audio {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 25px;
+            }
         }
     </style>
 </head>
 <body>
+    <noscript>
+        <p style="color: #ff4444; text-align: center; margin: 1rem;">
+            Vui lòng bật JavaScript để sử dụng đầy đủ chức năng của trang.
+        </p>
+    </noscript>
 
-    <!-- Video nền -->
-    <video autoplay loop muted class="video-background">
-        <source src="images/1.mp4" type="video/mp4">
+    <video autoplay loop muted class="video-background" poster="images/fallback-image.jpg" aria-hidden="true">
+        <source src="images/98c7ab5b-c2a3-45e5-83f3-475337813ad1.mp4" type="video/mp4">
+        Trình duyệt của bạn không hỗ trợ video.
     </video>
 
-    <!-- Lớp phủ tối -->
     <div class="overlay"></div>
 
-    <!-- Thanh điều hướng -->
-    <nav class="navbar">
-        <a href="images/55536772-c460-4374-b64e-f5fc5017bedb.jpg" class="logo">UIA</a>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <a href="index.php" class="logo">UIA</a>
         <ul class="menu">
             <li><a href="index.php">Trang Chủ</a></li>
             <li><a href="gioithieu.php">Giới Thiệu</a></li>
             <li><a href="contact.php">Liên Hệ</a></li>
-            <li><a href="products.index.php">Cửa Hàng</a></li>
+            <li><a href="products.php">Cửa Hàng</a></li>
             <?php if (isset($_SESSION['user'])): ?>
                 <li><a href="logout.php">Đăng Xuất</a></li>
             <?php else: ?>
                 <li><a href="login.php">Đăng Nhập</a></li>
-            <?php endif; ?> 
+            <?php endif; ?>
         </ul>
     </nav>
 
-    <!-- Nội dung -->
-    <div class="container">
+    <main class="container">
         <h1>Chào mừng đến với chúng tôi</h1>
         <p>Nơi cung cấp nhiều thể loại truyện</p>
         <button class="btn btn-primary" onclick="location.href='register.php'">Đăng Ký</button>
         <button class="btn btn-secondary" onclick="location.href='login.php'">Đăng Nhập</button>
-        <button id="unmuteButton" class="btn btn-primary">Đừng bấm vào</button>
+    </main>
 
-<script>
-    document.getElementById("unmuteButton").addEventListener("click", function () {
-        let video = document.querySelector(".video-background");
-        video.muted = false; // Bỏ tắt tiếng
-        video.play(); // Chạy lại video nếu cần
-    });
-</script>
+    <button id="toggleAudioButton" class="btn btn-toggle-audio muted" aria-label="Bật âm thanh video">Bật Âm Thanh</button>
 
-    </div>
+    <script>
+        const toggleAudioButton = document.getElementById('toggleAudioButton');
+        const video = document.querySelector('.video-background');
 
+        if (toggleAudioButton && video) {
+            toggleAudioButton.addEventListener('click', () => {
+                video.muted = !video.muted;
+                toggleAudioButton.textContent = video.muted ? 'Bật Âm Thanh' : 'Tắt Âm Thanh';
+                toggleAudioButton.classList.toggle('muted', video.muted);
+                toggleAudioButton.setAttribute('aria-label', video.muted ? 'Bật âm thanh video' : 'Tắt âm thanh video');
+            });
+        }
+    </script>
+
+    <?php if (file_exists('footer.php')) include 'footer.php'; ?>
 </body>
 </html>
-<?php include 'footer.php'; 
